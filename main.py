@@ -77,7 +77,7 @@ class ImageDB:
         song_images = self._songs.get(reference.id)
         if not song_images:
             logger.warning(
-                "Kon geen afbeeldingen vinden voor lied {reference.id}."
+                f"Kon geen afbeeldingen vinden voor lied {reference.id}."
             )
             return []
         
