@@ -2,9 +2,10 @@
 FROM batonogov/pyinstaller-windows:latest AS builder
 
 WORKDIR /temp
-COPY main.py .
 
 RUN pip install pillow python-pptx
+
+COPY main.py .
 
 RUN pyinstaller --onefile main.py
 
