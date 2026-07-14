@@ -83,7 +83,7 @@ class ImageDB:
         
         verses = reference.verses
         if verses is None:
-            verses = list(song_images)
+            verses = sorted(song_images)
         
         images = []
         for verse in verses:
