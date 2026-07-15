@@ -248,8 +248,9 @@ def main() -> None:
     if not reference_path.exists():
         logger.warning(f"{reference_path} kon niet worden gevonden.")
         showwarning(
+            "Liederen.txt niet gevonden",
             "Liederen.txt kon niet worden gevonden. Zorg ervoor dat dit "
-            f"bestand zich in de map {parent_path} bevindt."
+            f"bestand zich in de map {parent_path.absolute()} bevindt."
         )
         return
     
