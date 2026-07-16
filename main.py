@@ -32,6 +32,10 @@ class SongImage:
     image: Image.Image
     path: Path
 
+    song: str
+    verse: int
+    slide: int
+
     def cropped(self) -> Image.Image:
         brightness = self.image.split()[0]
         darkness = ImageOps.invert(brightness)
@@ -72,7 +76,7 @@ class ImageDB:
         if verse not in self._songs[id]:
             self._songs[id][verse] = {}
         
-        self._songs[id][verse][slide] = SongImage(image, path)
+        self._songs[id][verse][slide] = SongImage(image, path, id, verse, slide)
     
     def find(self, reference: SongReference) -> list[SongImage]:
         song_images = self._songs.get(reference.id)
@@ -115,8 +119,8 @@ class Powerpoint:
         self._presentation.slide_width = pptx.util.Cm(16)
         self._presentation.slide_height = pptx.util.Cm(9)
     
-    def add_image(self, image: Image.Image, path: Path) -> None:
-        ratio = image.height / image.width
+    def add_image(self, info: SongImage, crop: Image.Image, path: Path) -> None:
+        ratio = crop.height / crop.width
 
         max_width = pptx.util.Cm(15)
         max_height = pptx.util.Cm(8)
@@ -136,6 +140,9 @@ class Powerpoint:
         slide.shapes.add_picture(
             str(path), target_x, target_y, target_width, target_height
         )
+
+        notes = f"Lied {info.song} couplet {info.verse}"
+        slide.notes_slide.notes_text_frame.text = notes
     
     def save(self, path: Path):
         self._presentation.save(str(path))
@@ -206,7 +213,7 @@ def create_powerpoint(
         cropped = image.cropped()
         cropped.save(crop_path)
 
-        powerpoint.add_image(cropped, crop_path)
+        powerpoint.add_image(image, cropped, crop_path)
     
     powerpoint_path = base_path / "Liederen.pptx"
     powerpoint.save(powerpoint_path)
