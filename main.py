@@ -122,13 +122,13 @@ class Powerpoint:
     def add_image(self, info: SongImage, crop: Image.Image, path: Path) -> None:
         ratio = crop.height / crop.width
 
-        max_width = pptx.util.Cm(15)
-        max_height = pptx.util.Cm(8)
+        max_width: int = pptx.util.Cm(15)
+        max_height: int = pptx.util.Cm(8)
 
         target_width = max_width
         target_height = max_width * ratio
         if target_height > max_height:
-            target_width *= max_height / target_height
+            target_width = int(target_width * max_height / target_height)
             target_height = max_height
         
         target_x = (self._presentation.slide_width - target_width) / 2
