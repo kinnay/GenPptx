@@ -17,7 +17,8 @@ logger = logging.getLogger("GenPptx")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
+RELEASE_DATE = "16 juli 2026"
 
 
 @dataclass
@@ -214,7 +215,7 @@ def create_powerpoint(
 
 
 def main() -> None:
-    print(f"GenPptx versie {VERSION}")
+    print(f"GenPptx versie {VERSION} van {RELEASE_DATE}")
 
     input_path = Path("Liederen")
     if len(sys.argv) >= 2:
