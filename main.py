@@ -132,7 +132,7 @@ class Powerpoint:
             target_height = max_height
         
         target_x = (self._presentation.slide_width - target_width) / 2
-        target_y = (self._presentation.slide_height - target_height) / 2
+        target_y = pptx.util.Cm(0.5)
 
         blank_layout = self._presentation.slide_layouts[6]
 
